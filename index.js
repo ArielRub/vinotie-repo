@@ -8,15 +8,24 @@ import multer from "multer";
 import cors from "cors";
 import nodemailer from 'nodemailer';
 
+
 const port = 4000;
 const app = express();
+
+const corsOptions = {
+  origin: ['https://vinotie.com', 'http://vinotie.com', 'http://localhost:3000'], // Add all domains that need access
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD'], // Specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+  credentials: true, // Enable credentials if your frontend needs to send cookies or authentication info
+  optionsSuccessStatus: 204 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8888 } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Database Connection With MongoDB
 
